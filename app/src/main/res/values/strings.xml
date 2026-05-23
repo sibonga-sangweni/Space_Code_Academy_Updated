@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Space Code Academy</string>
+    <string name="activities_lifecycle"><![CDATA[ACTIVITIES & LIFECYCLE]]></string>
+    <string name="intents_navigation"><![CDATA[INTENTS & NAVIGATION]]></string>
+    <string name="space_code_academy">SPACE CODE ACADEMY</string>
+    <string name="beginner_level">Beginner Level</string>
+    <string name="intermediate_level">Intermediate Level</string>
+    <string name="advanced_level">Advanced Level</string>
+    <string name="take_challenge">🚀 TAKE CHALLENGE</string>
+    <string name="next">NEXT →</string>
+    <string name="prev">← PREV</string>
+    <string name="key_takeaways">🎯 KEY TAKEAWAYS</string>
+    <string name="code_example">📝 CODE EXAMPLE</string>
+    <string name="_1_3">1 / 3</string>
+    <string name="next_question">NEXT QUESTION →</string>
+    <string name="submit_answer">SUBMIT ANSWER</string>
+    <string name="question_goes_here">Question goes here</string>
+    <string name="lives">❤️ ❤️ ❤️</string>
+    <string name="_0">⭐ 0</string>
+    <string name="_1_5">1/5</string>
+</resources>
