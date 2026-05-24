@@ -48,7 +48,6 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        SoundManager.startBackgroundMusic(this);
 
         prefs = getSharedPreferences("user_prefs", MODE_PRIVATE);
         streakPrefs = getSharedPreferences("streak", MODE_PRIVATE);
@@ -120,20 +119,21 @@ public class DashboardActivity extends AppCompatActivity {
             levelBigText.setText(String.valueOf(level));
             quizzesCompletedText.setText(String.valueOf(quizzesCompleted));
 
-            // Calculate XP progress for current level
+            // Calculate XP progress within current level
             int xpForCurrentLevel = getXPForLevel(level);
             int xpForNextLevel = getXPForLevel(level + 1);
             int xpInCurrentLevel = totalXP - xpForCurrentLevel;
             int xpNeeded = xpForNextLevel - xpForCurrentLevel;
 
-            if (xpNeeded > 0) {
-                int progress = (xpInCurrentLevel * 100) / xpNeeded;
-                levelProgressBar.setProgress(progress);
-                levelProgressText.setText(xpInCurrentLevel + " / " + xpNeeded + " XP to next level");
-            } else {
-                levelProgressBar.setProgress(100);
-                levelProgressText.setText("Max level reached!");
-            }
+            // Calculate percentage (0-100)
+            int percentProgress = (xpInCurrentLevel * 100) / xpNeeded;
+
+            // Cap at 100 for the progress bar
+            levelProgressBar.setProgress(Math.min(percentProgress, 100));
+
+            // Always show as /100 (cap at 100)
+            int displayXP = Math.min(xpInCurrentLevel, 100);
+            levelProgressText.setText(displayXP + " / 100 XP to next level");
 
             updateDailyStreak();
             calculateOverallProgress();
@@ -381,7 +381,7 @@ public class DashboardActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        SoundManager.resumeBackgroundMusic();
+//        SoundManager.resumeBackgroundMusic();
         loadUserStats();
         updateContinueLearning();
     }
@@ -389,12 +389,12 @@ public class DashboardActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        SoundManager.pauseBackgroundMusic();
+//        SoundManager.pauseBackgroundMusic();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        SoundManager.stopBackgroundMusic();
+//        SoundManager.stopBackgroundMusic();
     }
 }
