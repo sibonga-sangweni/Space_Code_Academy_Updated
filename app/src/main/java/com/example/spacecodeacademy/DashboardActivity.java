@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import com.example.spacecodeacademy.database.UserDatabaseHelper;
+import android.webkit.WebView;
 import com.example.spacecodeacademy.utils.SoundManager;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -18,10 +20,19 @@ public class DashboardActivity extends AppCompatActivity {
     private CircleImageView profileImage;
     private TextView userName, userEmail, totalXPText, totalXPBigText, levelText, levelBigText;
     private TextView levelProgressText, overallProgressText, progressPercentText;
-    private TextView streakText, quizzesCompletedText, heartsCount;
+    private TextView streakText, quizzesCompletedText;
     private android.widget.ProgressBar levelProgressBar, overallProgressBar;
-    private Button continueButton, leaderboardButton, signOutButton;
+    private Button continueButton;
     private CardView continueCard;
+    private WebView youtubeWebView;
+
+    // Bottom Navigation
+    private LinearLayout leaderboardButton, topicsButton, signOutButton;
+
+    // Continue Learning Section
+    private TextView continueTopicText, continueLessonText;
+    private String currentTopic, currentLesson;
+    private int currentLessonIndex;
 
     // Database
     private UserDatabaseHelper dbHelper;
@@ -58,6 +69,7 @@ public class DashboardActivity extends AppCompatActivity {
         setUserInfo();
         loadUserStats();
         setupClickListeners();
+        updateContinueLearning();
     }
 
     private void initializeViews() {
@@ -75,18 +87,24 @@ public class DashboardActivity extends AppCompatActivity {
         progressPercentText = findViewById(R.id.progressPercentText);
         streakText = findViewById(R.id.streakText);
         quizzesCompletedText = findViewById(R.id.quizzesCompletedText);
-        heartsCount = findViewById(R.id.heartsCount);
+
         continueButton = findViewById(R.id.continueButton);
-        leaderboardButton = findViewById(R.id.leaderboardButton);
-        signOutButton = findViewById(R.id.signOutButton);
         continueCard = findViewById(R.id.continueCard);
+
+        // Bottom Navigation
+        leaderboardButton = findViewById(R.id.leaderboardButton);
+        topicsButton = findViewById(R.id.topicsButton);
+        signOutButton = findViewById(R.id.signOutButton);
+
+        // Continue Learning text views
+        continueTopicText = findViewById(R.id.continueTopicText);
+        continueLessonText = findViewById(R.id.continueLessonText);
     }
 
     private void setUserInfo() {
         userName.setText(username);
         userEmail.setText("android@learner.com");
         profileImage.setImageResource(R.drawable.default_avatar);
-        heartsCount.setText("3");
     }
 
     private void loadUserStats() {
@@ -95,15 +113,27 @@ public class DashboardActivity extends AppCompatActivity {
             int totalXP = stats.totalXP;
             int level = stats.level;
             int quizzesCompleted = stats.quizzesCompleted;
-            int currentLevelXP = totalXP % 100;
 
             totalXPText.setText(totalXP + " XP");
             totalXPBigText.setText(String.valueOf(totalXP));
             levelText.setText(String.valueOf(level));
             levelBigText.setText(String.valueOf(level));
             quizzesCompletedText.setText(String.valueOf(quizzesCompleted));
-            levelProgressBar.setProgress(currentLevelXP);
-            levelProgressText.setText(currentLevelXP + " / 100 XP to next level");
+
+            // Calculate XP progress for current level
+            int xpForCurrentLevel = getXPForLevel(level);
+            int xpForNextLevel = getXPForLevel(level + 1);
+            int xpInCurrentLevel = totalXP - xpForCurrentLevel;
+            int xpNeeded = xpForNextLevel - xpForCurrentLevel;
+
+            if (xpNeeded > 0) {
+                int progress = (xpInCurrentLevel * 100) / xpNeeded;
+                levelProgressBar.setProgress(progress);
+                levelProgressText.setText(xpInCurrentLevel + " / " + xpNeeded + " XP to next level");
+            } else {
+                levelProgressBar.setProgress(100);
+                levelProgressText.setText("Max level reached!");
+            }
 
             updateDailyStreak();
             calculateOverallProgress();
@@ -115,6 +145,22 @@ public class DashboardActivity extends AppCompatActivity {
             levelBigText.setText("1");
             levelProgressBar.setProgress(0);
             levelProgressText.setText("0 / 100 XP to next level");
+        }
+    }
+
+    private int getXPForLevel(int level) {
+        switch (level) {
+            case 1: return 0;
+            case 2: return 100;
+            case 3: return 300;
+            case 4: return 600;
+            case 5: return 1000;
+            case 6: return 1500;
+            case 7: return 2100;
+            case 8: return 2800;
+            case 9: return 3600;
+            case 10: return 4500;
+            default: return 4500 + ((level - 10) * 500);
         }
     }
 
@@ -156,23 +202,33 @@ public class DashboardActivity extends AppCompatActivity {
 
     private void calculateOverallProgress() {
         int totalLessons = 30;
+
         SharedPreferences lessonPrefs = getSharedPreferences("lesson_progress", MODE_PRIVATE);
 
-        // Count completed lessons
         int completedLessons = 0;
+
         String[] topics = {"UI Design", "Activities & Lifecycles", "Intents & Navigation",
                 "Data Storage", "RecyclerView", "OS Architecture"};
 
-        for (String topic : topics) {
-            for (int i = 1; i <= 5; i++) {
-                String lessonKey = topic + "_Lesson " + i + ": ";
-                // This is simplified - you may need to match your actual lesson keys
+        String[][] lessonTitles = {
+                {"Lesson 1: Introduction to Views", "Lesson 2: Layout Types", "Lesson 3: XML vs Programmatic UI", "Lesson 4: UI Components", "Lesson 5: Best Practices & Material Design"},
+                {"Lesson 1: What is an Activity?", "Lesson 2: Activity Lifecycle Methods", "Lesson 3: Managing State", "Lesson 4: Activity Communication & Results", "Lesson 5: Fragments"},
+                {"Lesson 1: Explicit Intents", "Lesson 2: Implicit Intents", "Lesson 3: Passing Data with Intents", "Lesson 4: Navigation Component Basics", "Lesson 5: Deep Linking & Best Practices"},
+                {"Lesson 1: SharedPreferences", "Lesson 2: Internal Storage", "Lesson 3: External Storage", "Lesson 4: SQLite Database Basics", "Lesson 5: Advanced SQLite & Room"},
+                {"Lesson 1: Introduction to RecyclerView", "Lesson 2: Creating Adapters and ViewHolders", "Lesson 3: Layout Managers", "Lesson 4: Item Decorations & Animations", "Lesson 5: Advanced Features"},
+                {"Lesson 1: Android Software Stack", "Lesson 2: Linux Kernel & Hardware Abstraction", "Lesson 3: Android Runtime (Dalvik vs ART)", "Lesson 4: Application Framework", "Lesson 5: Security Model & Permissions"}
+        };
+
+        for (int i = 0; i < topics.length; i++) {
+            for (int j = 0; j < lessonTitles[i].length; j++) {
+                String key = topics[i] + "_" + lessonTitles[i][j];
+                if (lessonPrefs.getBoolean(key, false)) {
+                    completedLessons++;
+                }
             }
         }
 
-        // Use saved count
-        int savedCompleted = prefs.getInt("completed_lessons", 0);
-        completedLessons = savedCompleted;
+        prefs.edit().putInt("completed_lessons", completedLessons).apply();
 
         int progressPercent = (completedLessons * 100) / totalLessons;
         overallProgressBar.setProgress(progressPercent);
@@ -180,27 +236,123 @@ public class DashboardActivity extends AppCompatActivity {
         progressPercentText.setText(progressPercent + "%");
     }
 
+    private void updateContinueLearning() {
+        SharedPreferences lessonPrefs = getSharedPreferences("lesson_progress", MODE_PRIVATE);
+
+        String[] topics = {"UI Design", "Activities & Lifecycles", "Intents & Navigation",
+                "Data Storage", "RecyclerView", "OS Architecture"};
+
+        String[][] lessonTitles = {
+                {"Lesson 1: Introduction to Views", "Lesson 2: Layout Types", "Lesson 3: XML vs Programmatic UI", "Lesson 4: UI Components", "Lesson 5: Best Practices & Material Design"},
+                {"Lesson 1: What is an Activity?", "Lesson 2: Activity Lifecycle Methods", "Lesson 3: Managing State", "Lesson 4: Activity Communication & Results", "Lesson 5: Fragments"},
+                {"Lesson 1: Explicit Intents", "Lesson 2: Implicit Intents", "Lesson 3: Passing Data with Intents", "Lesson 4: Navigation Component Basics", "Lesson 5: Deep Linking & Best Practices"},
+                {"Lesson 1: SharedPreferences", "Lesson 2: Internal Storage", "Lesson 3: External Storage", "Lesson 4: SQLite Database Basics", "Lesson 5: Advanced SQLite & Room"},
+                {"Lesson 1: Introduction to RecyclerView", "Lesson 2: Creating Adapters and ViewHolders", "Lesson 3: Layout Managers", "Lesson 4: Item Decorations & Animations", "Lesson 5: Advanced Features"},
+                {"Lesson 1: Android Software Stack", "Lesson 2: Linux Kernel & Hardware Abstraction", "Lesson 3: Android Runtime (Dalvik vs ART)", "Lesson 4: Application Framework", "Lesson 5: Security Model & Permissions"}
+        };
+
+        // Find the first incomplete lesson
+        boolean found = false;
+        for (int i = 0; i < topics.length; i++) {
+            for (int j = 0; j < lessonTitles[i].length; j++) {
+                String key = topics[i] + "_" + lessonTitles[i][j];
+                boolean isCompleted = lessonPrefs.getBoolean(key, false);
+
+                if (!isCompleted) {
+                    currentTopic = topics[i];
+                    currentLesson = lessonTitles[i][j];
+                    currentLessonIndex = j;
+                    found = true;
+                    break;
+                }
+            }
+            if (found) break;
+        }
+
+        // If all lessons are completed
+        if (!found) {
+            currentTopic = "Complete!";
+            currentLesson = "You've mastered all lessons!";
+        }
+
+        updateContinueLearningUI();
+    }
+
+    private void updateContinueLearningUI() {
+        if (continueTopicText != null && continueLessonText != null) {
+            String emoji = getTopicEmoji(currentTopic);
+            continueTopicText.setText(emoji + " " + currentTopic);
+            continueLessonText.setText(currentLesson);
+        }
+    }
+
+    private String getTopicEmoji(String topic) {
+        switch (topic) {
+            case "UI Design": return "📱";
+            case "Activities & Lifecycles": return "🔄";
+            case "Intents & Navigation": return "🧭";
+            case "Data Storage": return "💾";
+            case "RecyclerView": return "📋";
+            case "OS Architecture": return "🏛️";
+            default: return "🎉";
+        }
+    }
+
     private void setupClickListeners() {
+        // Continue Button
         continueButton.setOnClickListener(v -> {
             SoundManager.playClick(this);
-            Intent intent = new Intent(DashboardActivity.this, HomeActivity.class);
+
+            if (currentTopic.equals("Complete!")) {
+                Toast.makeText(this, "🎉 Congratulations! You've mastered everything! 🎉", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(DashboardActivity.this, HomeActivity.class);
+                startActivity(intent);
+                finish();
+                return;
+            }
+
+            Intent intent = new Intent(DashboardActivity.this, LessonActivity.class);
+            intent.putExtra("topic", currentTopic);
+            intent.putExtra("lessonTitle", currentLesson);
+            intent.putExtra("lessonIndex", currentLessonIndex);
             startActivity(intent);
-            finish();
         });
 
+        // Continue Card
         continueCard.setOnClickListener(v -> {
             SoundManager.playClick(this);
-            Intent intent = new Intent(DashboardActivity.this, HomeActivity.class);
+
+            if (currentTopic.equals("Complete!")) {
+                Toast.makeText(this, "🎉 Congratulations! You've mastered everything! 🎉", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(DashboardActivity.this, HomeActivity.class);
+                startActivity(intent);
+                finish();
+                return;
+            }
+
+            Intent intent = new Intent(DashboardActivity.this, LessonActivity.class);
+            intent.putExtra("topic", currentTopic);
+            intent.putExtra("lessonTitle", currentLesson);
+            intent.putExtra("lessonIndex", currentLessonIndex);
             startActivity(intent);
-            finish();
         });
 
+        // Leaderboard Button (Bottom Navigation)
         leaderboardButton.setOnClickListener(v -> {
             SoundManager.playClick(this);
             Intent intent = new Intent(DashboardActivity.this, LeaderboardActivity.class);
             startActivity(intent);
         });
 
+        // Topics Button (Bottom Navigation) - Goes to HomeActivity (Roadmap)
+        topicsButton.setOnClickListener(v -> {
+            SoundManager.playClick(this);
+            Intent intent = new Intent(DashboardActivity.this, HomeActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+        // Sign Out Button (Bottom Navigation)
         signOutButton.setOnClickListener(v -> {
             SoundManager.playClick(this);
             signOut();
@@ -231,6 +383,7 @@ public class DashboardActivity extends AppCompatActivity {
         super.onResume();
         SoundManager.resumeBackgroundMusic();
         loadUserStats();
+        updateContinueLearning();
     }
 
     @Override

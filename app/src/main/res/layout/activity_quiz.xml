@@ -7,6 +7,12 @@
     android:background="#FFFFFF"
     android:fitsSystemWindows="true">
 
+    <!-- Status Bar Spacer -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:background="@drawable/gradient_top_bg"/>
+
     <!-- Header with Gradient -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,7 +20,8 @@
         android:orientation="vertical"
         android:background="@drawable/gradient_top_bg"
         android:padding="16dp"
-        android:paddingTop="40dp">
+        android:paddingTop="0dp"
+        android:paddingBottom="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -337,7 +344,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="16dp"
-        android:paddingBottom="30dp"
+        android:paddingBottom="40dp"
         android:background="#FFFFFF">
 
         <Button

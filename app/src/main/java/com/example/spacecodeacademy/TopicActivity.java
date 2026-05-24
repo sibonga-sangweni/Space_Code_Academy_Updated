@@ -13,10 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.spacecodeacademy.adapters.LessonAdapter;
 import com.example.spacecodeacademy.models.Lesson;
 import com.example.spacecodeacademy.utils.SoundManager;
-import com.example.spacecodeacademy.utils.PlanetProgressManager;
-import com.example.spacecodeacademy.utils.XPManager;
 import java.util.ArrayList;
 import java.util.List;
+import com.example.spacecodeacademy.utils.PlanetProgressManager;
+import com.example.spacecodeacademy.utils.XPManager;
 
 public class TopicActivity extends AppCompatActivity {
 
@@ -73,6 +73,8 @@ public class TopicActivity extends AppCompatActivity {
 
     private void setupRecyclerView() {
         List<Lesson> lessons = getLessonsForTopic(topicName);
+
+        // Pass topicName as the third parameter to the adapter
         lessonAdapter = new LessonAdapter(lessons, (position, lesson) -> {
             // Check if previous lessons are completed
             if (position > 0) {
@@ -88,6 +90,14 @@ public class TopicActivity extends AppCompatActivity {
                 }
             }
 
+            // Check if the lesson is already completed
+            String currentKey = topicName + "_" + lesson.getTitle();
+            boolean isCompleted = getSharedPreferences("lesson_progress", MODE_PRIVATE).getBoolean(currentKey, false);
+
+            if (isCompleted) {
+                Toast.makeText(this, "Reviewing completed lesson", Toast.LENGTH_SHORT).show();
+            }
+
             SoundManager.playClick(this);
             Intent intent = new Intent(TopicActivity.this, LessonActivity.class);
             intent.putExtra("topic", topicName);
@@ -95,7 +105,9 @@ public class TopicActivity extends AppCompatActivity {
             intent.putExtra("lessonIndex", position);
             intent.putExtra("user_id", currentUserId);
             startActivity(intent);
-        });
+
+        }, topicName);  // IMPORTANT: Pass topicName as the third parameter
+
         lessonsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         lessonsRecyclerView.setAdapter(lessonAdapter);
     }

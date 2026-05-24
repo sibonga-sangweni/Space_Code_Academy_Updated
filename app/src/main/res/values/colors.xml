@@ -13,4 +13,12 @@
     <color name="red_800">#C62828</color>
     <color name="blue_800">#1565C0</color>
     <color name="orange_800">#E65100</color>
+
+    <!-- Lesson Status Colors -->
+    <color name="completed_green">#4CAF50</color>
+    <color name="completed_green_text">#2E7D32</color>
+    <color name="locked_gray">#9E9E9E</color>
+    <color name="locked_gray_text">#757575</color>
+    <color name="available_blue">#2196F3</color>
+    <color name="available_blue_text">#1976D2</color>
 </resources>

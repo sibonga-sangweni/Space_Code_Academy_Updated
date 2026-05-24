@@ -178,13 +178,13 @@ public class ResourcesActivity extends AppCompatActivity {
             case "UI Design":
                 resources.add(new ExternalResource(
                         "Android Views Documentation",
-                        "https://developer.android.com/develop/ui/views",
+                        "https://developer.android.com/reference/android/view/View",
                         "Complete guide to Android Views and UI components",
                         "documentation"
                 ));
                 resources.add(new ExternalResource(
                         "ConstraintLayout Tutorial (YouTube)",
-                        "https://www.youtube.com/watch?v=ZXpOn2QxpK4",
+                        "https://developer.android.com/develop/ui/views/layout/constraint-layout",
                         "Learn ConstraintLayout in 30 minutes",
                         "video"
                 ));
@@ -216,12 +216,6 @@ public class ResourcesActivity extends AppCompatActivity {
                         "documentation"
                 ));
                 resources.add(new ExternalResource(
-                        "Understanding Activity Lifecycle (Video)",
-                        "https://www.youtube.com/watch?v=J5B6P2yWkGQ",
-                        "Visual explanation of all lifecycle methods",
-                        "video"
-                ));
-                resources.add(new ExternalResource(
                         "Saving UI States with ViewModel",
                         "https://developer.android.com/topic/libraries/architecture/viewmodel",
                         "Modern approach to state management",
@@ -247,12 +241,6 @@ public class ResourcesActivity extends AppCompatActivity {
                         "https://developer.android.com/guide/components/intents-filters",
                         "Official guide to Intents and Intent Filters",
                         "documentation"
-                ));
-                resources.add(new ExternalResource(
-                        "Navigation Component Tutorial (Video)",
-                        "https://www.youtube.com/watch?v=8i3JNP0Oi4M",
-                        "Complete Navigation Component tutorial",
-                        "video"
                 ));
                 resources.add(new ExternalResource(
                         "Android Deep Linking",
@@ -282,12 +270,6 @@ public class ResourcesActivity extends AppCompatActivity {
                         "documentation"
                 ));
                 resources.add(new ExternalResource(
-                        "SQLite Database Tutorial (Video)",
-                        "https://www.youtube.com/watch?v=cp2j6jv47-w",
-                        "Step-by-step SQLite tutorial",
-                        "video"
-                ));
-                resources.add(new ExternalResource(
                         "Room Library Documentation",
                         "https://developer.android.com/training/data-storage/room",
                         "Modern database solution for Android",
@@ -295,7 +277,7 @@ public class ResourcesActivity extends AppCompatActivity {
                 ));
                 resources.add(new ExternalResource(
                         "SharedPreferences Best Practices",
-                        "https://medium.com/androiddevelopers/sharedpreferences-best-practices-4a20116bc7d",
+                        "https://developer.android.com/training/data-storage/shared-preferences",
                         "Article on using SharedPreferences correctly",
                         "documentation"
                 ));
@@ -315,28 +297,16 @@ public class ResourcesActivity extends AppCompatActivity {
                         "documentation"
                 ));
                 resources.add(new ExternalResource(
-                        "RecyclerView Tutorial (Video Series)",
-                        "https://www.youtube.com/watch?v=H0jXpP4_gLw",
-                        "Complete RecyclerView tutorial playlist",
-                        "video"
-                ));
-                resources.add(new ExternalResource(
                         "ItemTouchHelper for Swipe/Drag",
                         "https://developer.android.com/reference/androidx/recyclerview/widget/ItemTouchHelper",
                         "Add swipe to delete and drag to reorder",
                         "documentation"
                 ));
                 resources.add(new ExternalResource(
-                        "RecyclerView Animations Tutorial",
-                        "https://medium.com/androiddevelopers/recyclerview-animations-part-1-how-animations-work-3b126c4ac44a",
+                        "RecyclerView Animations Guide",
+                        "https://developer.android.com/guide/topics/ui/layout/recyclerview#animations",
                         "Master RecyclerView animations",
                         "documentation"
-                ));
-                resources.add(new ExternalResource(
-                        "Advanced RecyclerView Examples",
-                        "https://github.com/nisrulz/recyclerview-essentials",
-                        "GitHub repo with RecyclerView examples",
-                        "github"
                 ));
                 break;
 
@@ -352,12 +322,6 @@ public class ResourcesActivity extends AppCompatActivity {
                         "https://source.android.com/docs/security",
                         "How Android keeps apps and users safe",
                         "documentation"
-                ));
-                resources.add(new ExternalResource(
-                        "ART Runtime Explained (Video)",
-                        "https://www.youtube.com/watch?v=E6RvO7C6rVA",
-                        "Understanding Android Runtime (ART)",
-                        "video"
                 ));
                 resources.add(new ExternalResource(
                         "Android Open Source Project (AOSP)",

@@ -7,6 +7,12 @@
     android:background="#FFFFFF"
     android:fitsSystemWindows="true">
 
+    <!-- Status Bar Spacer -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:background="@drawable/gradient_top_bg"/>
+
     <!-- Header with Gradient -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,7 +20,7 @@
         android:orientation="vertical"
         android:background="@drawable/gradient_top_bg"
         android:padding="20dp"
-        android:paddingTop="48dp"
+        android:paddingTop="0dp"
         android:paddingBottom="24dp">
 
         <TextView
@@ -42,13 +48,16 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:padding="16dp"
-        android:scrollbars="none">
+        android:scrollbars="none"
+        android:clipToPadding="false"
+        android:paddingBottom="16dp">
 
         <LinearLayout
             android:id="@+id/resourcesContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"/>
+            android:orientation="vertical"
+            android:paddingBottom="16dp"/>
 
     </ScrollView>
 
@@ -64,6 +73,6 @@
         android:background="@drawable/gradient_blue_purple"
         android:layout_margin="16dp"
         android:layout_marginTop="0dp"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="30dp"/>
 
 </LinearLayout>

@@ -17,22 +17,22 @@
         android:padding="16dp"
         android:gravity="center_vertical">
 
-        <!-- Lesson Number/Icon -->
+        <!-- Lesson Status Icon Container -->
         <LinearLayout
+            android:id="@+id/lessonIconContainer"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:gravity="center"
             android:background="#F3F4F6"
-            app:cardCornerRadius="24dp">
+            android:layout_marginEnd="12dp">
 
             <TextView
-                android:id="@+id/lessonNumber"
+                android:id="@+id/lessonIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1"
-                android:textColor="#3B82F6"
-                android:textSize="18sp"
-                android:textStyle="bold"/>
+                android:text="📘"
+                android:textSize="20sp"
+                android:gravity="center"/>
 
         </LinearLayout>
 
@@ -41,8 +41,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginStart="12dp">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/lessonTitle"
@@ -64,14 +63,18 @@
 
         </LinearLayout>
 
-        <!-- Status Indicator -->
+        <!-- Status Badge -->
         <TextView
             android:id="@+id/lessonStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="📖"
-            android:textSize="20sp"
-            android:layout_marginStart="8dp"/>
+            android:text="Start"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="6dp"
+            android:layout_marginStart="8dp"
+            android:gravity="center"/>
 
     </LinearLayout>
 

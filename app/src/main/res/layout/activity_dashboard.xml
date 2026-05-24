@@ -89,7 +89,7 @@
 
             </LinearLayout>
 
-            <!-- Stats Section (Hearts, Streak, Level) -->
+            <!-- Stats Section (Streak and Level) -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -98,39 +98,8 @@
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="10dp"
                 android:gravity="center"
-                android:minWidth="120dp"
+                android:minWidth="100dp"
                 app:cardCornerRadius="30dp">
-
-                <!-- Hearts/Lives -->
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="❤️"
-                        android:textSize="14sp"/>
-
-                    <TextView
-                        android:id="@+id/heartsCount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="3"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        android:layout_marginStart="4dp"/>
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="16dp"
-                    android:background="#66FFFFFF"
-                    android:layout_marginHorizontal="12dp"/>
 
                 <!-- Streak -->
                 <LinearLayout
@@ -261,7 +230,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingHorizontal="20dp"
-            android:paddingBottom="30dp">
+            android:paddingBottom="80dp">
 
             <!-- Your Stats Card -->
             <androidx.cardview.widget.CardView
@@ -391,7 +360,7 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
-                            android:text="Galaxy Progress"
+                            android:text="Lesson Progress"
                             android:textColor="#1A1A1A"
                             android:textSize="14sp"
                             android:textStyle="bold"/>
@@ -447,7 +416,7 @@
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="16dp"
                 android:elevation="2dp"
-                android:layout_marginBottom="16dp">
+                android:layout_marginBottom="20dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -458,6 +427,7 @@
                     android:background="@drawable/gradient_blue_purple">
 
                     <TextView
+                        android:id="@+id/continueIcon"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
@@ -472,6 +442,7 @@
                         android:layout_marginStart="12dp">
 
                         <TextView
+                            android:id="@+id/continueTopicText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="UI Design"
@@ -480,6 +451,7 @@
                             android:textStyle="bold"/>
 
                         <TextView
+                            android:id="@+id/continueLessonText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Lesson 1: Introduction to Views"
@@ -503,31 +475,106 @@
 
             </androidx.cardview.widget.CardView>
 
-            <!-- Leaderboard Button with Gradient -->
-            <Button
-                android:id="@+id/leaderboardButton"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:text="🏆 VIEW LEADERBOARD"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:textColor="#FFFFFF"
-                android:background="@drawable/gradient_blue_purple"
-                android:layout_marginTop="8dp"/>
 
-            <!-- Sign Out Button -->
-            <Button
-                android:id="@+id/signOutButton"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:text="🚪 SIGN OUT"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:textColor="#FFFFFF"
-                android:background="@drawable/gradient_red"
-                android:layout_marginTop="12dp"/>
 
         </LinearLayout>
     </ScrollView>
+
+    <!-- Bottom Navigation Bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="horizontal"
+        android:background="#FFFFFF"
+        android:elevation="8dp"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        android:gravity="center">
+
+        <!-- Leaderboard Button -->
+        <LinearLayout
+            android:id="@+id/leaderboardButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?android:attr/selectableItemBackground">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🏆"
+                android:textSize="24sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Leaderboard"
+                android:textColor="#6B7280"
+                android:textSize="10sp"
+                android:layout_marginTop="4dp"/>
+
+        </LinearLayout>
+
+        <!-- Topics Button -->
+        <LinearLayout
+            android:id="@+id/topicsButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?android:attr/selectableItemBackground">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🌍"
+                android:textSize="24sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Topics"
+                android:textColor="#6B7280"
+                android:textSize="10sp"
+                android:layout_marginTop="4dp"/>
+
+        </LinearLayout>
+
+        <!-- Sign Out Button -->
+        <LinearLayout
+            android:id="@+id/signOutButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?android:attr/selectableItemBackground">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🚪"
+                android:textSize="24sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sign Out"
+                android:textColor="#6B7280"
+                android:textSize="10sp"
+                android:layout_marginTop="4dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>
