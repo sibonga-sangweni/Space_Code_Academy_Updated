@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import com.example.spacecodeacademy.utils.SoundManager;
 
 public class ResultActivity extends AppCompatActivity {
 
@@ -18,6 +19,9 @@ public class ResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_result);
 
         int score = getIntent().getIntExtra("score", 0);
+        if (score > 0) {
+            SoundManager.playXPGain(this);
+        }
 
         scoreText = findViewById(R.id.scoreText);
         xpText = findViewById(R.id.xpText);

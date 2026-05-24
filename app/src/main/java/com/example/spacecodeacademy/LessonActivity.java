@@ -1,17 +1,28 @@
 package com.example.spacecodeacademy;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import com.example.spacecodeacademy.utils.SoundManager;
+import java.io.File;
+import android.content.Intent;
+import android.widget.ImageView;
+import androidx.cardview.widget.CardView;
+
 
 public class LessonActivity extends AppCompatActivity {
 
+    private Button resourcesButton;
     private TextView lessonTitle, learningObjectives, keyConcepts, detailedExplanation;
     private TextView codeExample, proTip, progressText;
     private ProgressBar lessonProgress;
@@ -36,9 +47,16 @@ public class LessonActivity extends AppCompatActivity {
         updateProgress();
 
         testButton.setOnClickListener(v -> {
-            Intent intent = new Intent(LessonActivity.this, QuizActivity.class);
+                    SoundManager.playClick(this);
+                    Intent intent = new Intent(LessonActivity.this, QuizActivity.class);
+                    intent.putExtra("topic", topic);
+                    intent.putExtra("lessonName", lessonName);
+                    startActivity(intent);
+        });
+        resourcesButton.setOnClickListener(v -> {
+            SoundManager.playClick(this);
+            Intent intent = new Intent(LessonActivity.this, ResourcesActivity.class);
             intent.putExtra("topic", topic);
-            intent.putExtra("lessonName", lessonName);
             startActivity(intent);
         });
     }
@@ -55,6 +73,7 @@ public class LessonActivity extends AppCompatActivity {
         progressText = findViewById(R.id.progressText);
         diagramCard = findViewById(R.id.diagramCard);
         diagramImage = findViewById(R.id.diagramImage);
+        resourcesButton = findViewById(R.id.resourcesButton);
     }
 
     private void loadLessonContent() {

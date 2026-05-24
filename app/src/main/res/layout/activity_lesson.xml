@@ -224,12 +224,11 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Practice Tips -->
+        <!-- Pro Tip Section -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:layout_marginBottom="20dp"
             app:cardCornerRadius="12dp"
             app:cardBackgroundColor="#E65100">
 
@@ -254,7 +253,6 @@
                     android:textColor="#FFFFFF"
                     android:textSize="14sp"
                     android:layout_marginTop="10dp"/>
-
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -265,7 +263,19 @@
             android:layout_height="60dp"
             android:text="📝 Test Your Knowledge →"
             android:textSize="18sp"
+            android:layout_marginTop="20dp"
             android:backgroundTint="#4CAF50"/>
+
+        <!-- Further Reading Button -->
+        <Button
+            android:id="@+id/resourcesButton"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:text="📚 Further Reading &amp; Resources"
+            android:textSize="16sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:backgroundTint="#FF9800"/>
 
     </LinearLayout>
 </ScrollView>

@@ -3,6 +3,7 @@ package com.example.spacecodeacademy;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -12,9 +13,11 @@ import com.example.spacecodeacademy.adapters.LessonAdapter;
 import com.example.spacecodeacademy.models.Lesson;
 import java.util.ArrayList;
 import java.util.List;
+import com.example.spacecodeacademy.utils.SoundManager;
 
 public class TopicActivity extends AppCompatActivity {
 
+    private Button topicResourcesButton;
     private TextView topicTitle;
     private RecyclerView lessonsRecyclerView;
     private LessonAdapter lessonAdapter;
@@ -30,6 +33,13 @@ public class TopicActivity extends AppCompatActivity {
         setupToolbar();
         initializeViews();
         setupRecyclerView();
+
+        topicResourcesButton.setOnClickListener(v -> {
+            SoundManager.playClick(this);
+            Intent intent = new Intent(TopicActivity.this, ResourcesActivity.class);
+            intent.putExtra("topic", topicName);
+            startActivity(intent);
+        });
     }
 
     private void setupToolbar() {
@@ -46,6 +56,7 @@ public class TopicActivity extends AppCompatActivity {
         topicTitle = findViewById(R.id.topicTitle);
         lessonsRecyclerView = findViewById(R.id.lessonsRecyclerView);
         topicTitle.setText(topicName);
+        topicResourcesButton = findViewById(R.id.topicResourcesButton);
     }
 
     private void setupRecyclerView() {
@@ -66,6 +77,7 @@ public class TopicActivity extends AppCompatActivity {
                 }
             }
 
+            SoundManager.playClick(this);
             Intent intent = new Intent(TopicActivity.this, LessonActivity.class);
             intent.putExtra("topic", topicName);
             intent.putExtra("lessonTitle", lesson.getTitle());

@@ -38,7 +38,13 @@ public class LessonAdapter extends RecyclerView.Adapter<LessonAdapter.ViewHolder
         Lesson lesson = lessons.get(position);
         holder.titleText.setText(lesson.getTitle());
         holder.contentText.setText(lesson.getContent());
-        holder.cardView.setOnClickListener(v -> listener.onLessonClick(position, lesson));
+
+        // Set click listener on the card
+        holder.cardView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onLessonClick(position, lesson);
+            }
+        });
     }
 
     @Override
