@@ -1,34 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:gravity="center"
     android:orientation="vertical"
-    android:background="#081120">
+    android:gravity="center"
+    android:background="@drawable/gradient_top_bg"
+    android:fitsSystemWindows="true">
 
+    <!-- Logo / Icon -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:cardCornerRadius="50dp"
+        app:cardElevation="8dp"
+        android:backgroundTint="#FFFFFF"
+        android:layout_marginBottom="20dp">
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_launcher_foreground"
+            android:scaleType="fitCenter"/>
+
+    </androidx.cardview.widget.CardView>
+
+    <!-- Title -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="SPACE CODE ACADEMY"
         android:textColor="#FFFFFF"
         android:textSize="28sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:gravity="center"
+        android:letterSpacing="0.02"/>
 
+    <!-- Subtitle -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Android Development"
-        android:textColor="#4FC3F7"
-        android:textSize="18sp"
-        android:layout_marginTop="8dp"/>
+        android:textColor="#E0E7FF"
+        android:textSize="16sp"
+        android:layout_marginTop="8dp"
+        android:letterSpacing="0.01"/>
 
+    <!-- Rocket Animation -->
     <com.airbnb.lottie.LottieAnimationView
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="280dp"
+        android:layout_height="280dp"
         android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/rocket_intro" />
+
+    <!-- Loading Text -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Preparing for liftoff..."
+        android:textColor="#C7D2FE"
+        android:textSize="14sp"
+        android:layout_marginTop="16dp"/>
+
+    <!-- Dots Animation -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="✦ ✦ ✦"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        android:layout_marginTop="12dp"
+        android:alpha="0.6"/>
 
 </LinearLayout>

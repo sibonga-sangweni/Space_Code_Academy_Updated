@@ -3,6 +3,7 @@ package com.example.spacecodeacademy;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -26,13 +27,15 @@ public class ResourcesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resources);
 
+        SoundManager.startBackgroundMusic(this);
+
         topicName = getIntent().getStringExtra("topic");
 
         resourcesContainer = findViewById(R.id.resourcesContainer);
         topicTitle = findViewById(R.id.topicTitle);
         backButton = findViewById(R.id.backButton);
 
-        topicTitle.setText("📚 " + topicName + " - Resources");
+        topicTitle.setText(topicName);
 
         loadResources();
 
@@ -51,78 +54,111 @@ public class ResourcesActivity extends AppCompatActivity {
     }
 
     private void addResourceCard(ExternalResource resource) {
+        // Main Card
         CardView card = new CardView(this);
         CardView.LayoutParams cardParams = new CardView.LayoutParams(
                 CardView.LayoutParams.MATCH_PARENT,
                 CardView.LayoutParams.WRAP_CONTENT
         );
-        cardParams.setMargins(0, 0, 0, 30);
+        cardParams.setMargins(0, 0, 0, 16);
         card.setLayoutParams(cardParams);
         card.setRadius(16f);
         card.setCardElevation(4f);
-        card.setContentPadding(20, 20, 20, 20);
-        card.setCardBackgroundColor(0xFF1A237E);
+        card.setContentPadding(0, 0, 0, 0);
+        card.setCardBackgroundColor(0xFFFFFFFF);
+        card.setUseCompatPadding(true);
 
+        // Card Content
         LinearLayout cardContent = new LinearLayout(this);
         cardContent.setOrientation(LinearLayout.VERTICAL);
+        cardContent.setPadding(20, 20, 20, 20);
 
-        // Type badge
+        // Type Badge Row
+        LinearLayout badgeRow = new LinearLayout(this);
+        badgeRow.setOrientation(LinearLayout.HORIZONTAL);
+        badgeRow.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        ));
+
+        // Type Badge
         TextView typeBadge = new TextView(this);
         typeBadge.setText(getTypeBadge(resource.getType()));
-        typeBadge.setTextSize(12);
+        typeBadge.setTextSize(11);
         typeBadge.setPadding(12, 6, 12, 6);
         typeBadge.setBackgroundColor(getTypeColor(resource.getType()));
+        typeBadge.setTextColor(0xFFFFFFFF);
+
+        // Make badge rounded
+        android.graphics.drawable.GradientDrawable badgeShape = new android.graphics.drawable.GradientDrawable();
+        badgeShape.setShape(android.graphics.drawable.GradientDrawable.RECTANGLE);
+        badgeShape.setCornerRadius(30f);
+        badgeShape.setColor(getTypeColor(resource.getType()));
+        typeBadge.setBackground(badgeShape);
+
+        badgeRow.addView(typeBadge);
+
+        // Spacer
+        View spacer = new View(this);
+        spacer.setLayoutParams(new LinearLayout.LayoutParams(0, 0, 1));
+        badgeRow.addView(spacer);
+
+        cardContent.addView(badgeRow);
 
         // Title
         TextView titleText = new TextView(this);
         titleText.setText(resource.getTitle());
         titleText.setTextSize(18);
-        titleText.setTextColor(0xFFFFFFFF);
+        titleText.setTextColor(0xFF1A1A1A);
         titleText.setTypeface(null, android.graphics.Typeface.BOLD);
-        titleText.setPadding(0, 15, 0, 10);
+        titleText.setPadding(0, 16, 0, 8);
+        cardContent.addView(titleText);
 
         // Description
         TextView descText = new TextView(this);
         descText.setText(resource.getDescription());
         descText.setTextSize(14);
-        descText.setTextColor(0xFFB0BEC5);
-        descText.setPadding(0, 0, 0, 15);
+        descText.setTextColor(0xFF6B7280);
+        descText.setPadding(0, 0, 0, 16);
+        descText.setLineSpacing(4, 1);
+        cardContent.addView(descText);
 
-        // Open button
+        // Open Button
         Button openButton = new Button(this);
-        openButton.setText("🔗 Open Resource");
-        openButton.setBackgroundColor(0xFF4CAF50);
+        openButton.setText("🔗 OPEN RESOURCE");
+        openButton.setTextSize(14);
         openButton.setTextColor(0xFFFFFFFF);
-        openButton.setPadding(20, 12, 20, 12);
+        openButton.setAllCaps(false);
+
+        // Gradient background for button
+        openButton.setBackgroundResource(R.drawable.gradient_blue_purple);
+
+        openButton.setPadding(20, 14, 20, 14);
         openButton.setOnClickListener(v -> {
             SoundManager.playClick(this);
             openWebPage(resource.getUrl());
         });
 
-        cardContent.addView(typeBadge);
-        cardContent.addView(titleText);
-        cardContent.addView(descText);
         cardContent.addView(openButton);
-
         card.addView(cardContent);
         resourcesContainer.addView(card);
     }
 
     private String getTypeBadge(String type) {
         switch (type) {
-            case "video": return "🎥 VIDEO TUTORIAL";
-            case "documentation": return "📖 OFFICIAL DOCS";
-            case "github": return "💻 GITHUB REPO";
-            default: return "🔗 EXTERNAL LINK";
+            case "video": return "🎥 VIDEO";
+            case "documentation": return "📖 DOCS";
+            case "github": return "💻 GITHUB";
+            default: return "🔗 LINK";
         }
     }
 
     private int getTypeColor(String type) {
         switch (type) {
-            case "video": return 0xFFE65100;
-            case "documentation": return 0xFF1565C0;
-            case "github": return 0xFF2E7D32;
-            default: return 0xFF4A148C;
+            case "video": return 0xFFF97316;
+            case "documentation": return 0xFF3B82F6;
+            case "github": return 0xFF1A1A1A;
+            default: return 0xFF8B5CF6;
         }
     }
 
@@ -165,10 +201,10 @@ public class ResourcesActivity extends AppCompatActivity {
                         "documentation"
                 ));
                 resources.add(new ExternalResource(
-                        "Android UI Design Tutorial (Codelab)",
-                        "https://developer.android.com/codelabs/basic-android-kotlin-compose-training-xml-layouts",
-                        "Interactive tutorial for building UI",
-                        "article"
+                        "Android UI Design Examples",
+                        "https://github.com/android/architecture-samples",
+                        "Sample apps with great UI design",
+                        "github"
                 ));
                 break;
 
@@ -201,7 +237,7 @@ public class ResourcesActivity extends AppCompatActivity {
                         "Activity Result API (Modern)",
                         "https://developer.android.com/training/basics/intents/result",
                         "New way to get results from activities",
-                        "article"
+                        "documentation"
                 ));
                 break;
 
@@ -228,10 +264,10 @@ public class ResourcesActivity extends AppCompatActivity {
                         "Navigation Component Codelab",
                         "https://developer.android.com/codelabs/android-navigation",
                         "Hands-on tutorial for Navigation",
-                        "article"
+                        "documentation"
                 ));
                 resources.add(new ExternalResource(
-                        "Android Intents Example (GitHub)",
+                        "Android Intents Examples",
                         "https://github.com/android/architecture-samples",
                         "Sample code for Intents and Navigation",
                         "github"
@@ -261,7 +297,7 @@ public class ResourcesActivity extends AppCompatActivity {
                         "SharedPreferences Best Practices",
                         "https://medium.com/androiddevelopers/sharedpreferences-best-practices-4a20116bc7d",
                         "Article on using SharedPreferences correctly",
-                        "article"
+                        "documentation"
                 ));
                 resources.add(new ExternalResource(
                         "Working with Files on Android",
@@ -294,7 +330,7 @@ public class ResourcesActivity extends AppCompatActivity {
                         "RecyclerView Animations Tutorial",
                         "https://medium.com/androiddevelopers/recyclerview-animations-part-1-how-animations-work-3b126c4ac44a",
                         "Master RecyclerView animations",
-                        "article"
+                        "documentation"
                 ));
                 resources.add(new ExternalResource(
                         "Advanced RecyclerView Examples",
@@ -348,5 +384,23 @@ public class ResourcesActivity extends AppCompatActivity {
         }
 
         return resources;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SoundManager.resumeBackgroundMusic();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SoundManager.pauseBackgroundMusic();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SoundManager.stopBackgroundMusic();
     }
 }

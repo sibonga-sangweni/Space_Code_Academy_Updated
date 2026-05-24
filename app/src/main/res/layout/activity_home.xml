@@ -3,244 +3,584 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#081120">
+    android:background="#FFFFFF"
+    android:scrollbars="none"
+    android:fitsSystemWindows="true">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:padding="20dp"
+        android:paddingTop="48dp"
+        android:paddingBottom="40dp">
 
+        <!-- Top Bar -->
+        <LinearLayout
+            android:id="@+id/topBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="20dp">
+
+            <Button
+                android:id="@+id/backButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:text="←"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="#1A1A1A"
+                android:background="@drawable/circle_button_bg"
+                android:elevation="0dp"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Space Roadmap"
+                android:textColor="#1A1A1A"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:gravity="center"/>
+
+            <View
+                android:layout_width="40dp"
+                android:layout_height="40dp"/>
+
+        </LinearLayout>
+
+        <!-- Welcome Section -->
         <TextView
             android:id="@+id/welcomeText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/topBar"
             android:text="Welcome back, Cadet!"
-            android:textColor="#FFFFFF"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="20dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Android Development"
+            android:textColor="#1A1A1A"
             android:textSize="28sp"
             android:textStyle="bold"
-            android:textColor="#FFFFFF"/>
+            android:layout_marginBottom="8dp"/>
 
         <TextView
+            android:id="@+id/subtitleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Choose Your Topic"
-            android:textSize="18sp"
-            android:textColor="#B0BEC5"
-            android:layout_marginTop="8dp"/>
+            android:layout_below="@id/welcomeText"
+            android:text="Your journey through the Android galaxy"
+            android:textColor="#6B7280"
+            android:textSize="14sp"
+            android:layout_marginBottom="32dp"/>
 
-        <!-- Topic 1: UI Design -->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/uiDesignCard"
+        <!-- VERTICAL DASHED LINE -->
+        <View
+            android:id="@+id/centerLine"
+            android:layout_width="4dp"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/subtitleText"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/dash_2_vertical"/>
+
+        <!-- ==================== ROCKET START ==================== -->
+        <RelativeLayout
+            android:id="@+id/rocketContainer"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/subtitleText"
+            android:layout_marginBottom="10dp">
+
+            <LinearLayout
+                android:id="@+id/rocket"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/rocket_circle_bg"
+                android:layout_centerHorizontal="true"
+                android:elevation="4dp">
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:text="🚀"
+                    android:textSize="52sp"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAUNCH"
+                    android:textColor="#3B82F6"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="4dp"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <!-- ==================== PLANET 1: MERCURY ==================== -->
+        <RelativeLayout
+            android:id="@+id/mercuryContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rocketContainer"
             android:layout_marginTop="20dp"
-            app:cardCornerRadius="20dp">
+            android:layout_marginBottom="10dp">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:id="@+id/mercuryCard"
+                android:layout_width="220dp"
+                android:layout_height="180dp"
+                android:orientation="vertical"
                 android:gravity="center"
-                android:background="#1B5E20"
-                android:orientation="horizontal"
+                android:background="@drawable/planet_circle_bg_blue"
+                android:elevation="4dp"
+                android:layout_centerHorizontal="true"
                 android:padding="16dp">
 
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/mercury"
+                    android:scaleType="fitCenter"/>
+
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:text="MERCURY"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="8dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="UI Design"
-                    android:textColor="#FFFFFF"
-                    android:textSize="22sp"
-                    android:textStyle="bold"/>
+                    android:textColor="#E0E7FF"
+                    android:textSize="12sp"
+                    android:layout_marginTop="2dp"/>
+
+                <ProgressBar
+                    android:id="@+id/mercuryProgressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="140dp"
+                    android:layout_height="6dp"
+                    android:layout_marginTop="12dp"
+                    android:progressTint="#4CAF50"
+                    android:progressBackgroundTint="#33FFFFFF"
+                    android:progress="0"/>
+
+                <TextView
+                    android:id="@+id/mercuryProgress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0%"
+                    android:textColor="#FCD34D"
+                    android:textSize="12sp"
+                    android:layout_marginTop="4dp"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <!-- ==================== PLANET 2: VENUS ==================== -->
+        <RelativeLayout
+            android:id="@+id/venusContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/mercuryContainer"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp">
+
+            <LinearLayout
+                android:id="@+id/venusCard"
+                android:layout_width="220dp"
+                android:layout_height="180dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/planet_circle_bg_orange"
+                android:elevation="4dp"
+                android:layout_centerHorizontal="true"
+                android:padding="16dp">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/venus"
+                    android:scaleType="fitCenter"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Views, Layouts, XML"
-                    android:textColor="#A5D6A7"
-                    android:textSize="14sp"/>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <!-- Topic 2: Activities & Lifecycles -->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/lifecycleCard"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:layout_marginTop="15dp"
-            app:cardCornerRadius="20dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:background="#E65100"
-                android:orientation="horizontal"
-                android:padding="16dp">
+                    android:text="VENUS"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="8dp"/>
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:text="Activities &amp; Lifecycles"
-                    android:textColor="#FFFFFF"
-                    android:textSize="22sp"
-                    android:textStyle="bold"/>
+                    android:textColor="#FFE0B2"
+                    android:textSize="11sp"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"/>
+
+                <ProgressBar
+                    android:id="@+id/venusProgressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="140dp"
+                    android:layout_height="6dp"
+                    android:layout_marginTop="12dp"
+                    android:progressTint="#4CAF50"
+                    android:progressBackgroundTint="#33FFFFFF"
+                    android:progress="0"/>
+
+                <TextView
+                    android:id="@+id/venusProgress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0%"
+                    android:textColor="#FCD34D"
+                    android:textSize="12sp"
+                    android:layout_marginTop="4dp"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <!-- ==================== PLANET 3: MARS ==================== -->
+        <RelativeLayout
+            android:id="@+id/marsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/venusContainer"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp">
+
+            <LinearLayout
+                android:id="@+id/marsCard"
+                android:layout_width="220dp"
+                android:layout_height="180dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/planet_circle_bg_red"
+                android:elevation="4dp"
+                android:layout_centerHorizontal="true"
+                android:padding="16dp">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/mars"
+                    android:scaleType="fitCenter"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="onCreate, onStart, etc"
-                    android:textColor="#FFCC80"
-                    android:textSize="14sp"/>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <!-- Topic 3: Intents & Navigation -->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/intentsCard"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:layout_marginTop="15dp"
-            app:cardCornerRadius="20dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:background="#4A148C"
-                android:orientation="horizontal"
-                android:padding="16dp">
+                    android:text="MARS"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="8dp"/>
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:text="Intents &amp; Navigation"
-                    android:textColor="#FFFFFF"
-                    android:textSize="22sp"
-                    android:textStyle="bold"/>
+                    android:textColor="#FFCDD2"
+                    android:textSize="11sp"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"/>
+
+                <ProgressBar
+                    android:id="@+id/marsProgressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="140dp"
+                    android:layout_height="6dp"
+                    android:layout_marginTop="12dp"
+                    android:progressTint="#4CAF50"
+                    android:progressBackgroundTint="#33FFFFFF"
+                    android:progress="0"/>
+
+                <TextView
+                    android:id="@+id/marsProgress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0%"
+                    android:textColor="#FCD34D"
+                    android:textSize="12sp"
+                    android:layout_marginTop="4dp"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <!-- ==================== PLANET 4: JUPITER ==================== -->
+        <RelativeLayout
+            android:id="@+id/jupiterContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/marsContainer"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp">
+
+            <LinearLayout
+                android:id="@+id/jupiterCard"
+                android:layout_width="220dp"
+                android:layout_height="180dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/planet_circle_bg_purple"
+                android:elevation="4dp"
+                android:layout_centerHorizontal="true"
+                android:padding="16dp">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/jupiter"
+                    android:scaleType="fitCenter"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Explicit, Implicit"
-                    android:textColor="#CE93D8"
-                    android:textSize="14sp"/>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <!-- Topic 4: Data Storage -->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/dataStorageCard"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:layout_marginTop="15dp"
-            app:cardCornerRadius="20dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:background="#0D47A1"
-                android:orientation="horizontal"
-                android:padding="16dp">
+                    android:text="JUPITER"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="8dp"/>
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:text="Data Storage"
-                    android:textColor="#FFFFFF"
-                    android:textSize="22sp"
-                    android:textStyle="bold"/>
+                    android:textColor="#E1BEE7"
+                    android:textSize="12sp"
+                    android:layout_marginTop="2dp"/>
+
+                <ProgressBar
+                    android:id="@+id/jupiterProgressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="140dp"
+                    android:layout_height="6dp"
+                    android:layout_marginTop="12dp"
+                    android:progressTint="#4CAF50"
+                    android:progressBackgroundTint="#33FFFFFF"
+                    android:progress="0"/>
+
+                <TextView
+                    android:id="@+id/jupiterProgress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0%"
+                    android:textColor="#FCD34D"
+                    android:textSize="12sp"
+                    android:layout_marginTop="4dp"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <!-- ==================== PLANET 5: SATURN ==================== -->
+        <RelativeLayout
+            android:id="@+id/saturnContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/jupiterContainer"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp">
+
+            <LinearLayout
+                android:id="@+id/saturnCard"
+                android:layout_width="220dp"
+                android:layout_height="180dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/planet_circle_bg_teal"
+                android:elevation="4dp"
+                android:layout_centerHorizontal="true"
+                android:padding="16dp">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/saturn"
+                    android:scaleType="fitCenter"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="SharedPrefs, SQLite"
-                    android:textColor="#90CAF9"
-                    android:textSize="14sp"/>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <!-- Topic 5: RecyclerView -->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/recyclerViewCard"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:layout_marginTop="15dp"
-            app:cardCornerRadius="20dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:background="#BF360C"
-                android:orientation="horizontal"
-                android:padding="16dp">
+                    android:text="SATURN"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="8dp"/>
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:text="RecyclerView"
-                    android:textColor="#FFFFFF"
-                    android:textSize="22sp"
-                    android:textStyle="bold"/>
+                    android:textColor="#B2DFDB"
+                    android:textSize="12sp"
+                    android:layout_marginTop="2dp"/>
+
+                <ProgressBar
+                    android:id="@+id/saturnProgressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="140dp"
+                    android:layout_height="6dp"
+                    android:layout_marginTop="12dp"
+                    android:progressTint="#4CAF50"
+                    android:progressBackgroundTint="#33FFFFFF"
+                    android:progress="0"/>
 
                 <TextView
+                    android:id="@+id/saturnProgress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Adapter, ViewHolder"
-                    android:textColor="#FFAB91"
-                    android:textSize="14sp"/>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+                    android:text="0%"
+                    android:textColor="#FCD34D"
+                    android:textSize="12sp"
+                    android:layout_marginTop="4dp"/>
 
-        <!-- Topic 6: OS Architecture -->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/osArchCard"
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <!-- ==================== PLANET 6: EARTH ==================== -->
+        <RelativeLayout
+            android:id="@+id/earthContainer"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="20dp"
-            app:cardCornerRadius="20dp">
+            android:layout_height="wrap_content"
+            android:layout_below="@id/saturnContainer"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:id="@+id/earthCard"
+                android:layout_width="220dp"
+                android:layout_height="180dp"
+                android:orientation="vertical"
                 android:gravity="center"
-                android:background="#2E7D32"
-                android:orientation="horizontal"
+                android:background="@drawable/planet_circle_bg_green"
+                android:elevation="4dp"
+                android:layout_centerHorizontal="true"
                 android:padding="16dp">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="OS Architecture"
-                    android:textColor="#FFFFFF"
-                    android:textSize="22sp"
-                    android:textStyle="bold"/>
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/earth"
+                    android:scaleType="fitCenter"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Linux Kernel, DVM"
-                    android:textColor="#A5D6A7"
-                    android:textSize="14sp"/>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+                    android:text="EARTH"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="8dp"/>
 
-    </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="OS Architecture"
+                    android:textColor="#D1FAE5"
+                    android:textSize="12sp"
+                    android:layout_marginTop="2dp"/>
+
+                <ProgressBar
+                    android:id="@+id/earthProgressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="140dp"
+                    android:layout_height="6dp"
+                    android:layout_marginTop="12dp"
+                    android:progressTint="#4CAF50"
+                    android:progressBackgroundTint="#33FFFFFF"
+                    android:progress="0"/>
+
+                <TextView
+                    android:id="@+id/earthProgress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0%"
+                    android:textColor="#FCD34D"
+                    android:textSize="12sp"
+                    android:layout_marginTop="4dp"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <!-- Mission Complete Banner -->
+        <RelativeLayout
+            android:id="@+id/completeContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/earthContainer"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp">
+
+            <LinearLayout
+                android:id="@+id/trophyCard"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/earth_circle_bg"
+                android:layout_centerHorizontal="true"
+                android:elevation="4dp">
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:text="🏆"
+                    android:textSize="52sp"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="COMPLETE!"
+                    android:textColor="#10B981"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="4dp"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/completeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="You've mastered the galaxy!"
+            android:textColor="#10B981"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/completeContainer"
+            android:layout_marginTop="10dp"/>
+
+        <!-- Leaderboard Button -->
+        <Button
+            android:id="@+id/leaderboardButton"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_below="@id/completeText"
+            android:layout_marginTop="20dp"
+            android:text="🏆 VIEW LEADERBOARD"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/gradient_blue_purple"/>
+
+    </RelativeLayout>
 </ScrollView>

@@ -1,41 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#081120">
+    android:background="#FFFFFF"
+    android:fitsSystemWindows="true">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <!-- Gradient Header with Toolbar -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="#0D1B2A"
-        android:elevation="4dp"/>
-
-    <TextView
-        android:id="@+id/topicTitle"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Topic"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        android:textColor="#FFFFFF"
-        android:layout_margin="20dp"/>
+        android:orientation="vertical"
+        android:background="@drawable/gradient_top_bg">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/transparent"
+            android:elevation="0dp"
+            app:titleTextColor="#FFFFFF"
+            app:titleTextAppearance="@style/ToolbarTitle"/>
+
+        <TextView
+            android:id="@+id/topicTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Topic"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="20dp"/>
+
+    </LinearLayout>
+
+    <!-- Lessons Count Badge -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="📚"
+            android:textSize="16sp"
+            android:background="#F3F4F6"
+            android:padding="8dp"
+            android:paddingHorizontal="12dp"
+            app:cardCornerRadius="20dp"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="5 Lessons"
+            android:textColor="#6B7280"
+            android:textSize="14sp"
+            android:layout_marginStart="12dp"
+            android:gravity="center_vertical"/>
+
+        <TextView
+            android:id="@+id/progressBadge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0% Complete"
+            android:textColor="#3B82F6"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:background="#EFF6FF"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="6dp"
+            app:cardCornerRadius="20dp"/>
+
+    </LinearLayout>
+
+    <!-- Lessons RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lessonsRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp"/>
-    <!-- Add this at the end of the LinearLayout, before closing -->
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="16dp"
+        android:clipToPadding="false"
+        android:scrollbars="none"/>
+
+    <!-- Resources Button -->
     <Button
         android:id="@+id/topicResourcesButton"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:text="📚 All Topic Resources"
-        android:textSize="16sp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:backgroundTint="#FF9800"/>
+        android:text="📚 ALL TOPIC RESOURCES"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/gradient_teal"
+        android:layout_margin="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="20dp"/>
 
 </LinearLayout>

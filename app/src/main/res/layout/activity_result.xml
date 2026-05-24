@@ -1,61 +1,204 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:background="#081120">
+    android:background="#FFFFFF"
+    android:fitsSystemWindows="true"
+    android:fillViewport="true">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="🌟 MISSION COMPLETE 🌟"
-        android:textSize="30sp"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"/>
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="24dp"
+        android:paddingTop="60dp"
+        android:paddingBottom="40dp">
 
-    <TextView
-        android:id="@+id/scoreText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Score: 0"
-        android:textSize="28sp"
-        android:textColor="#4FC3F7"
-        android:layout_marginTop="20dp"
-        android:textStyle="bold"/>
+        <!-- Celebration Icon -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🎉"
+            android:textSize="64sp"
+            android:layout_marginBottom="16dp"/>
 
-    <TextView
-        android:id="@+id/xpText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="+0 XP"
-        android:textSize="24sp"
-        android:textColor="#00FFAA"
-        android:layout_marginTop="10dp"/>
+        <!-- Title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MISSION COMPLETE!"
+            android:textSize="28sp"
+            android:textColor="#1A1A1A"
+            android:textStyle="bold"
+            android:gravity="center"/>
 
-    <TextView
-        android:id="@+id/totalXPText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Total XP: 0"
-        android:textSize="20sp"
-        android:textColor="#B0BEC5"
-        android:layout_marginTop="10dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Great job, Commander!"
+            android:textColor="#6B7280"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="32dp"/>
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/success_animation"/>
+        <!-- Score Card -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="4dp"
+            android:layout_marginBottom="20dp">
 
-    <Button
-        android:id="@+id/backHomeBtn"
-        android:layout_width="200dp"
-        android:layout_height="55dp"
-        android:text="Back to Home"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="#4CAF50"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp"
+                android:gravity="center">
 
-</LinearLayout>
+                <!-- Score -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Your Score"
+                    android:textColor="#6B7280"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/scoreText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0/30"
+                    android:textColor="#3B82F6"
+                    android:textSize="48sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="8dp"/>
+
+                <!-- XP Earned -->
+                <View
+                    android:layout_width="60dp"
+                    android:layout_height="1dp"
+                    android:background="#E5E7EB"
+                    android:layout_marginVertical="16dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="XP Earned"
+                    android:textColor="#6B7280"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/xpText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+0 XP"
+                    android:textColor="#10B981"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="4dp"/>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Total XP Card -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            android:layout_marginBottom="24dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:text="⭐"
+                    android:textSize="24sp"
+                    android:gravity="center"
+                    android:background="#F3F4F6"
+                    android:padding="8dp"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginStart="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Total XP"
+                        android:textColor="#6B7280"
+                        android:textSize="12sp"/>
+
+                    <TextView
+                        android:id="@+id/totalXPText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0 XP"
+                        android:textColor="#1A1A1A"
+                        android:textSize="18sp"
+                        android:textStyle="bold"/>
+
+                </LinearLayout>
+
+                <!-- Level Badge -->
+                <TextView
+                    android:id="@+id/levelBadge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lv 1"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:background="#3B82F6"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="6dp"
+                    app:cardCornerRadius="20dp"/>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Lottie Animation -->
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/success_animation"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Congratulation Message -->
+        <TextView
+            android:id="@+id/congratsMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="You're making great progress!"
+            android:textColor="#6B7280"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- Back Button -->
+        <Button
+            android:id="@+id/backHomeBtn"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:text="CONTINUE LEARNING"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/gradient_blue_purple"/>
+
+    </LinearLayout>
+</ScrollView>

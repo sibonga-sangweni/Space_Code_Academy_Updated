@@ -1,11 +1,8 @@
 package com.example.spacecodeacademy;
 
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -14,11 +11,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import com.example.spacecodeacademy.utils.SoundManager;
-import java.io.File;
-import android.content.Intent;
-import android.widget.ImageView;
-import androidx.cardview.widget.CardView;
-
 
 public class LessonActivity extends AppCompatActivity {
 
@@ -47,12 +39,13 @@ public class LessonActivity extends AppCompatActivity {
         updateProgress();
 
         testButton.setOnClickListener(v -> {
-                    SoundManager.playClick(this);
-                    Intent intent = new Intent(LessonActivity.this, QuizActivity.class);
-                    intent.putExtra("topic", topic);
-                    intent.putExtra("lessonName", lessonName);
-                    startActivity(intent);
+            SoundManager.playClick(this);
+            Intent intent = new Intent(LessonActivity.this, QuizActivity.class);
+            intent.putExtra("topic", topic);
+            intent.putExtra("lessonName", lessonName);
+            startActivity(intent);
         });
+
         resourcesButton.setOnClickListener(v -> {
             SoundManager.playClick(this);
             Intent intent = new Intent(LessonActivity.this, ResourcesActivity.class);
@@ -152,6 +145,36 @@ public class LessonActivity extends AppCompatActivity {
                 loadOSLesson5();
             }
         }
+    }
+
+    private void updateProgress() {
+        SharedPreferences prefs = getSharedPreferences("lesson_progress", MODE_PRIVATE);
+        String key = topic + "_" + lessonName;
+        boolean completed = prefs.getBoolean(key, false);
+
+        if (completed) {
+            lessonProgress.setProgress(100);
+            progressText.setText("100% Complete - ✅ Mastered!");
+            testButton.setText("📝 Review Test");
+        } else {
+            // Calculate progress based on quiz attempts?
+            // For now, show 0% until quiz is passed
+            int quizScore = prefs.getInt(key + "_score", 0);
+            if (quizScore > 0) {
+                lessonProgress.setProgress(50);
+                progressText.setText("50% Complete - Take test to master!");
+            } else {
+                lessonProgress.setProgress(0);
+                progressText.setText("0% Complete - Take test to master!");
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Refresh progress when returning from quiz
+        updateProgress();
     }
 
     // ==================== UI DESIGN LESSONS ====================
@@ -944,20 +967,5 @@ public class LessonActivity extends AppCompatActivity {
         codeExample.setText("<!-- Declare permissions in manifest -->\n<uses-permission android:name=\"android.permission.INTERNET\" />\n<uses-permission android:name=\"android.permission.CAMERA\" />\n\n<!-- Request dangerous permission at runtime (Android 6.0+) -->\nif (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)\n    != PackageManager.PERMISSION_GRANTED) {\n    \n    ActivityCompat.requestPermissions(this,\n        new String[]{Manifest.permission.CAMERA},\n        REQUEST_CODE);\n}\n\n// Handle permission result\n@Override\npublic void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {\n    if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {\n        // Permission granted\n    }\n}\n\n// Security best practices in code\n// 1. Don't log sensitive data\n// Bad: Log.d(\"Password\", password);\n// Good: Log.d(\"Password\", \"[REDACTED]\");\n\n// 2. Encrypt sensitive data\nSharedPreferences prefs = getSharedPreferences(\"secure_prefs\", MODE_PRIVATE);\nSharedPreferences.Editor editor = prefs.edit();\n// Use EncryptedSharedPreferences for sensitive data\n\n// 3. Network security\n<network-security-config>\n    <domain-config cleartextTrafficPermitted=\"false\">\n        <domain includeSubdomains=\"true\">api.example.com</domain>\n    </domain-config>\n</network-security-config>\n\n// 4. Input validation\npublic void processInput(String userInput) {\n    if (userInput == null || userInput.isEmpty()) return;\n    // Sanitize input before using\n    String sanitized = userInput.replaceAll(\"[^a-zA-Z0-9]\", \"\");\n}");
 
         proTip.setText("Always request the minimum permissions your app needs. Users are more likely to install apps that don't ask for unnecessary permissions!");
-    }
-
-    private void updateProgress() {
-        SharedPreferences prefs = getSharedPreferences("lesson_progress", MODE_PRIVATE);
-        String key = topic + "_" + lessonName;
-        boolean completed = prefs.getBoolean(key, false);
-
-        if (completed) {
-            lessonProgress.setProgress(100);
-            progressText.setText("100% Complete - ✅ Mastered!");
-            testButton.setText("📝 Review Test");
-        } else {
-            lessonProgress.setProgress(50);
-            progressText.setText("50% Complete - Take test to master!");
-        }
     }
 }

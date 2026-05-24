@@ -2,17 +2,21 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.spacecodeacademy">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="Space Code Academy"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.NoActionBar">
+        android:theme="@style/Theme.AppCompat.NoActionBar"
+        android:usesCleartextTraffic="true">
 
-        <!-- Add android:exported="true" to SplashActivity -->
+        <!-- SPLASH ACTIVITY - LAUNCHER (FIRST) -->
         <activity
-            android:name=".DashboardActivity"
+            android:name=".SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
@@ -21,34 +25,52 @@
             </intent-filter>
         </activity>
 
-        <!-- Also add android:exported for other activities that have intent-filters -->
+        <!-- LOGIN ACTIVITY - SECOND -->
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+
+        <!-- DASHBOARD ACTIVITY -->
+        <activity
+            android:name=".DashboardActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+
+        <!-- HOME ACTIVITY (Roadmap) -->
         <activity
             android:name=".HomeActivity"
             android:exported="false" />
 
+        <!-- TOPIC ACTIVITY -->
         <activity
             android:name=".TopicActivity"
             android:exported="false" />
 
+        <!-- LESSON ACTIVITY -->
         <activity
             android:name=".LessonActivity"
             android:exported="false" />
 
+        <!-- QUIZ ACTIVITY -->
         <activity
             android:name=".QuizActivity"
             android:exported="false" />
 
+        <!-- RESULT ACTIVITY -->
         <activity
             android:name=".ResultActivity"
             android:exported="false" />
 
+        <!-- RESOURCES ACTIVITY -->
         <activity
             android:name=".ResourcesActivity"
-            android:exported="false"/>
+            android:exported="false" />
 
+        <!-- LEADERBOARD ACTIVITY -->
         <activity
-            android:name=".SplashActivity"
-            android:exported="false"/>
+            android:name=".LeaderboardActivity"
+            android:exported="false" />
 
     </application>
 </manifest>

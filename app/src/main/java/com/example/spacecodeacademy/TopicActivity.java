@@ -5,23 +5,27 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.spacecodeacademy.adapters.LessonAdapter;
 import com.example.spacecodeacademy.models.Lesson;
+import com.example.spacecodeacademy.utils.SoundManager;
+import com.example.spacecodeacademy.utils.PlanetProgressManager;
+import com.example.spacecodeacademy.utils.XPManager;
 import java.util.ArrayList;
 import java.util.List;
-import com.example.spacecodeacademy.utils.SoundManager;
 
 public class TopicActivity extends AppCompatActivity {
 
     private Button topicResourcesButton;
-    private TextView topicTitle;
+    private TextView topicTitle, progressBadge;
     private RecyclerView lessonsRecyclerView;
     private LessonAdapter lessonAdapter;
     private String topicName;
+    private int currentUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,10 +33,17 @@ public class TopicActivity extends AppCompatActivity {
         setContentView(R.layout.activity_topic);
 
         topicName = getIntent().getStringExtra("topic");
+        currentUserId = getIntent().getIntExtra("user_id", -1);
+
+        if (currentUserId == -1) {
+            SharedPreferences sessionPrefs = getSharedPreferences("user_session", MODE_PRIVATE);
+            currentUserId = sessionPrefs.getInt("user_id", -1);
+        }
 
         setupToolbar();
         initializeViews();
         setupRecyclerView();
+        updateProgress();
 
         topicResourcesButton.setOnClickListener(v -> {
             SoundManager.playClick(this);
@@ -55,8 +66,9 @@ public class TopicActivity extends AppCompatActivity {
     private void initializeViews() {
         topicTitle = findViewById(R.id.topicTitle);
         lessonsRecyclerView = findViewById(R.id.lessonsRecyclerView);
-        topicTitle.setText(topicName);
         topicResourcesButton = findViewById(R.id.topicResourcesButton);
+        progressBadge = findViewById(R.id.progressBadge);
+        topicTitle.setText(topicName);
     }
 
     private void setupRecyclerView() {
@@ -69,10 +81,9 @@ public class TopicActivity extends AppCompatActivity {
                 boolean prevCompleted = prefs.getBoolean(prevLessonKey, false);
 
                 if (!prevCompleted) {
-                    // Show dialog or toast that previous lesson must be completed
-                    android.widget.Toast.makeText(this,
+                    Toast.makeText(this,
                             "Please complete the previous lesson first!",
-                            android.widget.Toast.LENGTH_SHORT).show();
+                            Toast.LENGTH_SHORT).show();
                     return;
                 }
             }
@@ -82,10 +93,27 @@ public class TopicActivity extends AppCompatActivity {
             intent.putExtra("topic", topicName);
             intent.putExtra("lessonTitle", lesson.getTitle());
             intent.putExtra("lessonIndex", position);
+            intent.putExtra("user_id", currentUserId);
             startActivity(intent);
         });
         lessonsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         lessonsRecyclerView.setAdapter(lessonAdapter);
+    }
+
+    private void updateProgress() {
+        SharedPreferences prefs = getSharedPreferences("lesson_progress", MODE_PRIVATE);
+        List<Lesson> lessons = getLessonsForTopic(topicName);
+        int completed = 0;
+        for (Lesson lesson : lessons) {
+            String key = topicName + "_" + lesson.getTitle();
+            if (prefs.getBoolean(key, false)) {
+                completed++;
+            }
+        }
+        int percent = (completed * 100) / lessons.size();
+        if (progressBadge != null) {
+            progressBadge.setText(percent + "% Complete");
+        }
     }
 
     private List<Lesson> getLessonsForTopic(String topic) {
@@ -199,8 +227,66 @@ public class TopicActivity extends AppCompatActivity {
                         "Android's security features and permission system.",
                         "Protecting user data and system resources"));
                 break;
+
+            default:
+                lessons.add(new Lesson("Lesson 1: Introduction to Views",
+                        "Learn what Views are, the View hierarchy, and basic View types.",
+                        "Understanding Views and ViewGroups"));
+                lessons.add(new Lesson("Lesson 2: Layout Types",
+                        "Explore LinearLayout, ConstraintLayout, RelativeLayout.",
+                        "Mastering different layout containers"));
+                lessons.add(new Lesson("Lesson 3: XML vs Programmatic UI",
+                        "Compare XML layout design vs programmatic UI creation.",
+                        "Choosing the right approach"));
+                lessons.add(new Lesson("Lesson 4: UI Components",
+                        "Deep dive into Buttons, TextViews, EditTexts.",
+                        "Working with common UI elements"));
+                lessons.add(new Lesson("Lesson 5: Best Practices",
+                        "Learn Material Design principles and UI best practices.",
+                        "Creating professional interfaces"));
+                break;
         }
 
         return lessons;
+    }
+
+    private void checkPlanetCompletion() {
+        SharedPreferences prefs = getSharedPreferences("lesson_progress", MODE_PRIVATE);
+
+        List<Lesson> lessons = getLessonsForTopic(topicName);
+        boolean allCompleted = true;
+
+        for (Lesson lesson : lessons) {
+            String key = topicName + "_" + lesson.getTitle();
+            if (!prefs.getBoolean(key, false)) {
+                allCompleted = false;
+                break;
+            }
+        }
+
+        if (allCompleted && !PlanetProgressManager.isPlanetCompleted(this, topicName)) {
+            PlanetProgressManager.completePlanet(this, topicName);
+            XPManager.addXP(this, 100);
+
+            Toast.makeText(this, "🎉 PLANET COMPLETED! +100 XP 🎉\n" +
+                            PlanetProgressManager.getCompletedPlanetsCount(this) + "/6 Planets Mastered!",
+                    Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkPlanetCompletion();
+        updateProgress();
+        if (lessonAdapter != null) {
+            lessonAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }
